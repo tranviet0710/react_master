@@ -8,9 +8,9 @@ function Expenses(props) {
         props.onYearChange(selectedYear);
     };
     return (
-        <div>
+        <div className="expenses">
             <ExpensesFilter onYearChange={changeYearHandler} />
-            <Card className="expenses">
+            <Card >
                 {expenses.map((item, index) => (
                     <ExpenseItem
                         title={item.title}
@@ -18,7 +18,8 @@ function Expenses(props) {
                         date={item.date} />
                 ))
                 }
-            </Card></div>
+            </Card>
+        </div>
     )
 }
 export default Expenses;
