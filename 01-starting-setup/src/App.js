@@ -1,7 +1,8 @@
+import React, { useState } from "react";
 import Expenses from "./components/Expense/Expenses";
 import NewExpense from "./components/NewExpense/NewExpense";
 function App() {
-  const expenses = [
+  const [expenses, setExpenses] = useState([
     {
       id: 'e1',
       title: 'Toilet Paper',
@@ -18,14 +19,25 @@ function App() {
     {
       id: 'e4',
       title: 'New Desk (Wooden)',
-      amount: 450,
+      amount: 450.23,
       date: new Date(2021, 5, 12),
     },
-  ];
+  ]);
+  const [filteredExpenses, setFilterExpenses] = useState(expenses);
+  const addExpenseHandler = (expense) => {
+    setExpenses((prevExpenses) => {
+      return [...prevExpenses, expense]
+    });
+  }
+
+  const filterByYearHandler = (year) => {
+    setFilterExpenses(expenses.filter(expense => expense.date.getFullYear().toString() === year));
+  }
+
   return (
     <div>
-      <NewExpense />
-      <Expenses items={expenses} />
+      <NewExpense onAddExpense={addExpenseHandler} />
+      <Expenses items={filteredExpenses} onYearChange={filterByYearHandler} />
     </div>
   );
 }
