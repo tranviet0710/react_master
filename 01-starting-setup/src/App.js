@@ -23,21 +23,17 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ]);
-  const [filteredExpenses, setFilterExpenses] = useState(expenses);
+
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
-      return [...prevExpenses, expense]
+      return [expense, ...prevExpenses]
     });
-  }
-
-  const filterByYearHandler = (year) => {
-    setFilterExpenses(expenses.filter(expense => expense.date.getFullYear().toString() === year));
   }
 
   return (
     <div>
       <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={filteredExpenses} onYearChange={filterByYearHandler} />
+      <Expenses items={expenses} />
     </div>
   );
 }
