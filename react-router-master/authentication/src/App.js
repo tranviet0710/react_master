@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Login from "./components/Login";
-import Home from "../src/components/Home/Home";
+import Home from "../src/components/Home";
 function App() {
   const [isLoggined, setIsLoggined] = useState(false);
   useEffect(() => {
