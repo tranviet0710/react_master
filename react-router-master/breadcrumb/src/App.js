@@ -5,6 +5,7 @@ import {
   Route,
   Routes,
   BrowserRouter,
+  Outlet,
 } from "react-router-dom";
 import Home from "./Home";
 import About from "./About";
@@ -16,10 +17,13 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Breadcrumb />
+        <Outlet />
         <Routes>
-          <Route path="/" exact component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} />
+          {/* Version < 6 => component */}
+          {/* Version 6 => element */}
+          <Route path="/" exact element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
     </BrowserRouter>
