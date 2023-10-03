@@ -1,6 +1,11 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  BrowserRouter,
+} from "react-router-dom";
 import Home from "./Home";
 import About from "./About";
 import Contact from "./Contact";
@@ -8,7 +13,7 @@ import Breadcrumb from "./Breadcrumb";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
         <Breadcrumb />
         <Routes>
@@ -17,7 +22,7 @@ function App() {
           <Route path="/contact" component={Contact} />
         </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
