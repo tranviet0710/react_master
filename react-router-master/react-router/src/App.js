@@ -7,7 +7,6 @@ import {
   Route,
 } from "react-router-dom";
 import Products from "./pages/Products";
-import MainNavigation from "../../react-router-1/src/components/MainNavigation";
 
 // Sử dụng 1 mảng các objects
 const router = createBrowserRouter([
