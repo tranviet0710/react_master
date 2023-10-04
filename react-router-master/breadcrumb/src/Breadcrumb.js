@@ -8,7 +8,7 @@ const Breadcrumb = () => {
   return (
     <div>
       {pathnames.length > 0 && (
-        <nav className="flex justify-center ">
+        <nav className="flex justify-center">
           <ul className="inline-flex items-center space-x-1 md:space-x-3">
             <li className="inline-flex items-center">
               <Link to="/">Home</Link>
