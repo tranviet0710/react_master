@@ -1,0 +1,10 @@
+.badge {
+    color: white;
+    position: absolute;
+    font-size: 12px;
+    background: red;
+    border-radius: 50%;
+    right: -25px;
+    bottom: 10px;
+    opacity: 0.9;
+}

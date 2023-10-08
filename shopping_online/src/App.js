@@ -10,7 +10,7 @@ import Box from "./components/Box";
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [products, setProducts] = useState([]);
-
+  const [numberOfProducts, setNumberProducts] = useState(0);
   const updateModal = () => {
     console.log("update modal");
     setShowModal(!showModal);
@@ -21,7 +21,9 @@ function App() {
       .then((res) => res.json())
       .then((data) => setProducts(data.products));
   }, []);
-
+  const updateCart = () => {
+    setNumberProducts(numberOfProducts + 1);
+  };
   return (
     <>
       <div
@@ -36,13 +38,21 @@ function App() {
             <Route
               path="/"
               element={
-                <HomePage products={products} updateModal={updateModal} />
+                <HomePage
+                  products={products}
+                  updateModal={updateModal}
+                  updateCart={updateCart}
+                />
               }
             ></Route>
             <Route
               path="/home"
               element={
-                <HomePage products={products} updateModal={updateModal} />
+                <HomePage
+                  products={products}
+                  updateModal={updateModal}
+                  updateCart={updateCart}
+                />
               }
             ></Route>
             <Route path="/profile" element={<Profile />}></Route>
@@ -51,7 +61,7 @@ function App() {
 
         {showModal ? <Login updateModal={updateModal} /> : null}
       </div>
-      {/* <Box /> */}
+      <Box numberOfProducts={numberOfProducts} />
     </>
   );
 }

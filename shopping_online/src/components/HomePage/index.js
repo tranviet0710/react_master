@@ -13,6 +13,7 @@ export const HomePage = (props) => {
               key={index}
               product={product}
               updateModal={props.updateModal}
+              updateCart={props.updateCart}
             />
           ))}
       </div>

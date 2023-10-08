@@ -8,7 +8,7 @@ export default function Product(props) {
     if (!isLoggedIn) {
       props.updateModal();
     } else {
-      alert("Added to cart!");
+      props.updateCart();
     }
   };
   return (
