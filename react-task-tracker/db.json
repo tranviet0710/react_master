@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "Testing class",
+      "day": "28/08/2022 7: 00AM",
+      "reminder": true
+    },
+    {
+      "id": 2,
+      "text": "ASP.NET class",
+      "day": "28/08/2022 1: 00PM",
+      "reminder": true
+    },
+    {
+      "id": 3,
+      "text": "One Mount Hack2Hire",
+      "day": "28/08/2022 9: 30PM",
+      "reminder": true
+    },
+    {
+      "text": "Task 3",
+      "date": "Wednesday",
+      "reminder": true,
+      "id": "ptzqe9a"
+    },
+    {
+      "text": "Task 2",
+      "date": "Tuesday",
+      "reminder": true,
+      "id": "FgFdDdX"
+    }
+  ]
+}

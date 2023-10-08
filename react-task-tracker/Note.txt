@@ -1,0 +1,7 @@
+-) If you want the referenced page not to be reloaded, using Link-to from
+react-router-dom
+-) Async/Await
+-) Promise
+-) Hook
+-) Want to show any element in some identified page, we use useLocation and checkif
+location.pathname === 'path-we-want'
