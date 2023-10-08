@@ -52,7 +52,12 @@ export const Navigation = (props) => {
         )}
       </div>
       <div>
-        <div className="mt-96 w-60 h-60 bg-green-100"></div>
+        <div className="mt-96 w-60 h-60">
+          <img
+            src="https://codelearn.io/Upload/Blog/react-js-co-ban-phan-1-63738082145.3856.jpg"
+            className="object-cover w-full h-full rounded-full "
+          ></img>
+        </div>
       </div>
     </div>
   );
