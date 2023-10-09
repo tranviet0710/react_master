@@ -1,19 +1,37 @@
-const InvoiceDate = () => {
+import { useContext } from "react";
+import FormContext from "../../store/FormContext";
+
+const InvoiceInfo = () => {
+  const { invoiceInfo, updateInvoiceInfo } = useContext(FormContext);
+  const updateDueDate = (event) => {
+    updateInvoiceInfo("dueDate", event.target.value);
+  };
+  const updateVoiceNumber = (event) => {
+    updateInvoiceInfo("number", event.target.value);
+  };
   return (
     <div className="grid grid-cols-8">
       <div className="col-span-5">
         <p>
-          <b>Current Date: </b> 10/5/2023
+          <b>Current Date: </b> {invoiceInfo.currentDate}
         </p>
         <p>
           <b>Due date: </b>
-          <input type="date" className="bg-gray-100 px-6 py-2"></input>
+          <input
+            onChange={updateDueDate}
+            value={invoiceInfo.dueDate}
+            type="date"
+            className="bg-gray-100 px-6 py-2"
+            required
+          ></input>
         </p>
       </div>
       <div className="col-span-3 flex flex-col items-end">
         <p className="">
           <b>Invoice number: </b>
           <input
+            onChange={updateVoiceNumber}
+            value={invoiceInfo.number}
             name=""
             placeholder="1"
             type="number"
@@ -27,4 +45,4 @@ const InvoiceDate = () => {
     </div>
   );
 };
-export default InvoiceDate;
+export default InvoiceInfo;

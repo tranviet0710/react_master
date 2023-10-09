@@ -5,12 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { ItemProvider } from "./store/ItemContext";
+import { FormProvider } from "./store/FormContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ItemProvider>
-      <App />
+      <FormProvider>
+        <App />
+      </FormProvider>
     </ItemProvider>
   </React.StrictMode>
 );

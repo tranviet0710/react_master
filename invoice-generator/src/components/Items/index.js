@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import Item from "../Item";
 import ItemContext from "../../store/ItemContext";
-import { classes } from "./Items.module.css";
 const Items = (props) => {
   const { items, addItem } = useContext(ItemContext);
   return (

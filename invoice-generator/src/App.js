@@ -3,89 +3,74 @@ import Button from "./components/Button";
 import Currency from "./components/Currency";
 import Rate from "./components/Rate";
 import Devision from "./components/Devision";
-import InvoiceDate from "./components/Header";
+import InvoiceInfo from "./components/Header";
 import Bill from "./components/Bill";
 import Items from "./components/Items";
 import Footer from "./components/Footer";
-import { useState } from "react";
-
+import { useContext, useState } from "react";
+import "./App.css";
+import Modal from "./components/Modal";
+import FormContext from "./store/FormContext";
 function App() {
   const [showModal, setShowModal] = useState(false);
-  const displayModal = () => {
-    setShowModal(true);
+  const { billTo, updateBillTo, billFrom, updateBillFrom } =
+    useContext(FormContext);
+  const displayModal = (event) => {
+    event.preventDefault();
+    const form = document.getElementById("form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+    });
+    const submitBtn = document.getElementById("submit-btn");
+    submitBtn.click((e) => {
+      e.preventDefault();
+    });
   };
   return (
-    <div className="h-4/5 container mx-auto grid grid-cols-8 gap-4">
-      <div className="col-span-6 border rounded-3xl bg-white p-10">
-        <InvoiceDate />
-        <Devision />
-        <div className="grid grid-cols-10 gap-4">
-          <Bill name="Bill to: " who="Who is this invoice to?" />
-          <Bill name="Bill from: " who="Who is this invoice from?" />
-        </div>
-        <Devision />
-        <Items />
-        <Devision />
-        <Footer />
-      </div>
-      <div className="col-span-2 mt-10">
-        <Button onClick={displayModal}> Review Invoice </Button>
-        <Devision />
-        <Currency />
-        <Rate text="Tax rate" />
-        <Rate text="Discount rate" />
-      </div>
-      {showModal ? (
-        <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Modal Title</h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
-                </div>
-                {/*body*/}
-                <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
-                    I always felt like I could do anything. That’s the main
-                    thing people are controlled by! Thoughts- their perception
-                    of themselves! They're slowed down by their perception of
-                    themselves. If you're taught you can’t do anything, you
-                    won’t do anything. I was taught I could do everything.
-                  </p>
-                </div>
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Save Changes
-                  </button>
-                </div>
-              </div>
+    <div className="App flex flex-col items-center justify-center w-full text-black">
+      <div className="container grid grid-cols-8 gap-4">
+        <div className="col-span-6 border rounded-3xl bg-white p-10">
+          <form id="form">
+            <InvoiceInfo />
+            <Devision />
+            <div className="grid grid-cols-10 gap-4">
+              <Bill
+                name="Bill to: "
+                who="Who is this invoice to?"
+                bill={billTo}
+                updateBill={updateBillTo}
+              />
+              <Bill
+                name="Bill from: "
+                who="Who is this invoice from?"
+                bill={billFrom}
+                updateBill={updateBillFrom}
+              />
             </div>
-          </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
+            <button
+              id="submit-btn"
+              type="submit"
+              style={{ display: "none" }}
+            ></button>
+          </form>
+          <Devision />
+          <Items />
+          <Devision />
+          <Footer />
+        </div>
+        <div className="col-span-2 mt-10">
+          <Button onClick={displayModal}> Review Invoice </Button>
+          <Devision />
+          <Currency />
+          <Rate text="Tax rate" />
+          <Rate text="Discount rate" />
+        </div>
+        {showModal ? (
+          <>
+            <Modal setShowModal={setShowModal} />
+          </>
+        ) : null}
+      </div>
     </div>
   );
 }
