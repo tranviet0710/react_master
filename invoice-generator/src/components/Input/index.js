@@ -1,5 +1,5 @@
 const Input = (props) => {
-  const updateBill = (event) => {
+  const update = (event) => {
     props.update(event.target.name, event.target.value);
   };
   return (
@@ -9,7 +9,7 @@ const Input = (props) => {
       required
       placeholder={props.placeholder}
       className="bg-gray-50 w-full p-2 mb-3"
-      onChange={updateBill}
+      onChange={update}
     ></input>
   );
 };

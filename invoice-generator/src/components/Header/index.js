@@ -15,13 +15,13 @@ const InvoiceInfo = () => {
         <p>
           <b>Current Date: </b> {invoiceInfo.currentDate}
         </p>
-        <p>
-          <b>Due date: </b>
+        <p className="mt-2">
+          <b>Due Date: </b>
           <input
             onChange={updateDueDate}
             value={invoiceInfo.dueDate}
             type="date"
-            className="bg-gray-100 px-6 py-2"
+            className="bg-gray-100 px-5 py-2"
             required
           ></input>
         </p>

@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import FormContext from "../../store/FormContext";
+
 const Currency = () => {
+  const { setSelectedCurrency } = useContext(FormContext);
   return (
     <div className="my-4">
       <label
@@ -8,6 +12,9 @@ const Currency = () => {
         Currency:
       </label>
       <select
+        onChange={(event) => {
+          setSelectedCurrency(event.target.value);
+        }}
         id="money"
         className="
         text-center

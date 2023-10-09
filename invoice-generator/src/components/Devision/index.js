@@ -1,7 +1,7 @@
 const Devision = () => {
   return (
     <div>
-      <hr className="m-6" />
+      <hr className="my-6" />
     </div>
   );
 };
