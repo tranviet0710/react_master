@@ -14,7 +14,7 @@ const Home = (props) => {
   const logoutHandler = () => {
     logout();
   };
-  useEffect(() => {
+  const getData = () => {
     axios
       .get("http://localhost:5001/api/videos", {
         headers: {
@@ -23,43 +23,27 @@ const Home = (props) => {
         },
         params: {
           limit: 10,
-          currentPage: 1,
+          currentPage: page,
           sortBy: "publishedAt",
         },
       })
       .then((res) => {
-        setVideos(res.data.data.body);
-        setTotalItems(res.data.data.totalItems);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  const fetchProducts = async () => {
-    if (videos.length >= totalItems) {
-      setHasMore(false);
-      return;
-    }
-    axios
-      .get("http://localhost:5001/api/videos", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          data: "application/json",
-        },
-        params: {
-          limit: 10,
-          currentPage: page + 1,
-          sortBy: "publishedAt",
-        },
-      })
-      .then((res) => {
-        console.log("currentPage", page);
         setVideos([...videos, ...res.data.data.body]);
+        setTotalItems(res.data.data.totalItems);
         setPage(page + 1);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => getData(), []);
+  const fetchProducts = async () => {
+    if (videos.length >= totalItems) {
+      setHasMore(false);
+      return;
+    }
+    getData();
   };
   return (
     <div className="max-h-screen">
