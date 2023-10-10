@@ -63,7 +63,7 @@ let VideosService = class VideosService {
         else {
             queryBuilder.orderBy('video.title', 'ASC');
         }
-        const res = await (0, helpers_1.paginate)(queryBuilder, { limit: dto.limit, page: 1 });
+        const res = await (0, helpers_1.paginate)(queryBuilder, { limit: dto.limit, page: dto.currentPage });
         if (!res.success) {
             return {
                 success: false,

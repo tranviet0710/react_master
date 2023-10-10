@@ -10,6 +10,7 @@ const Home = (props) => {
   const [videos, setVideos] = useState([]);
   const [page, setPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
   const logoutHandler = () => {
     logout();
   };
@@ -35,6 +36,10 @@ const Home = (props) => {
       });
   }, []);
   const fetchProducts = async () => {
+    if (videos.length >= totalItems) {
+      setHasMore(false);
+      return;
+    }
     axios
       .get("http://localhost:5001/api/videos", {
         headers: {
@@ -43,11 +48,12 @@ const Home = (props) => {
         },
         params: {
           limit: 10,
-          currentPage: page,
+          currentPage: page + 1,
           sortBy: "publishedAt",
         },
       })
       .then((res) => {
+        console.log("currentPage", page);
         setVideos([...videos, ...res.data.data.body]);
         setPage(page + 1);
       })
@@ -65,13 +71,13 @@ const Home = (props) => {
         <InfiniteScroll
           dataLength={videos.length} // Độ dài hiện tại của danh sách sản phẩm
           next={fetchProducts} // Hàm được gọi khi scroll xuống cuối cùng
-          hasMore={true} // Tiếp tục load khi còn sản phẩm
+          hasMore={hasMore} // Tiếp tục load khi còn sản phẩm
           loader={<h4>Loading...</h4>} // Hiển thị thông báo loading
           endMessage={<p>No more videos</p>} // Thông báo hết sản phẩm
         >
           <div className="grid gap-y-14 gap-x-8 grid-cols-4 p-8 ml-60">
             {videos.map((video) => (
-              <Card key={video.id} video={video} />
+              <Card key={video.name} video={video} />
             ))}
           </div>
         </InfiniteScroll>
