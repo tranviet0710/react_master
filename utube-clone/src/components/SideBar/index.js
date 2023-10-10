@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   MdHomeFilled,
   MdOutlineSlowMotionVideo,
@@ -17,8 +17,13 @@ import {
 import { TbMusic, TbDeviceGamepad2 } from "react-icons/tb";
 import { FaRegCompass } from "react-icons/fa";
 import { GiFilmStrip } from "react-icons/gi";
+import AuthContext from "../../store/AuthContext";
 
 export default function SideBar() {
+  const { isLoggedIn, logout } = useContext(AuthContext);
+  const logoutHandler = () => {
+    logout();
+  };
   const mainLinks = [
     {
       icon: <MdHomeFilled className="text-xl" />,
@@ -119,7 +124,10 @@ export default function SideBar() {
   ];
 
   return (
-    <div className="w-2/12 bg-[#212121] pr-5 overflow-auto pb-8 sidebar fixed">
+    <div
+      className="w-2/12 bg-[#212121] mt-14 pr-5 pb-8 overflow-auto sidebar fixed h-full"
+      style={{ overflowY: "scroll" }}
+    >
       <ul className="flex flex-col border-b-2 border-gray-700">
         {mainLinks.map(({ icon, name }) => {
           return (
@@ -173,6 +181,17 @@ export default function SideBar() {
           );
         })}
       </ul>
+      {isLoggedIn && (
+        <div className="flex justify-center mt-2">
+          <button
+            className="bg-red-500 px-5 py-2 rounded-full"
+            onClick={logoutHandler}
+          >
+            Log out
+          </button>
+        </div>
+      )}
+
       <ul className="flex gap-2 flex-wrap text-sm p-4 text-zinc-400">
         {textLinks[0].map((name) => {
           return <li key={name}>{name}</li>;
@@ -185,7 +204,7 @@ export default function SideBar() {
       </ul>
       <span className="px-4 text-sm text-zinc-400">&copy; 2022 Google</span>
       <br />
-      <p className="px-4 pt-3 text-sm text-zinc-400">
+      <p className="px-4 pt-1 text-sm text-zinc-400">
         This clone is for educational purpose only.
       </p>
     </div>
