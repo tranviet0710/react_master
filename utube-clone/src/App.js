@@ -7,7 +7,6 @@ import ErrorPage from "./components/Error";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   return (
-    // <BrowserRouter>
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
@@ -17,7 +16,6 @@ function App() {
         <Route path="/home" element={<Home />} />
       </Route>
     </Routes>
-    // </BrowserRouter>
   );
 }
 
