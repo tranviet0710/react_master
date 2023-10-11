@@ -1,49 +1,43 @@
-import { useEffect, useState } from "react";
 import MeetupList from "../components/meetups/MeetupList";
-
-const DUMMY_MEETUPS = [
-  {
-    id: "m1",
-    title: "A First Meetup",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg",
-    address: "Some address 5, 12345 Some City",
-    description: "This is a first meetup!",
-  },
-  {
-    id: "m2",
-    title: "A Second Meetup",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg",
-    address: "Some address 10, 12345 Some City",
-    description: "This is a second meetup!",
-  },
-];
+import { MongoClient } from "mongodb";
 
 function HomePage(props) {
-  const [meetUps, setMeetUps] = useState([]);
-  useEffect(() => {
-    // send a http request and fetch data
-    setMeetUps(DUMMY_MEETUPS);
-  }, []);
   return <MeetupList meetups={props.meetUps} />;
 }
 
-// export async function getStaticProps() {
+export async function getStaticProps() {
+  const client = await MongoClient.connect(
+    "mongodb+srv://vietdev:WOXGUE2PMxxDrQDA@cluster0.59ezxwz.mongodb.net/meetups?retryWrites=true&w=majority"
+  );
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const meetUps = await meetupsCollection.find().toArray();
+
+  client.close();
+
+  return {
+    props: {
+      meetUps: meetUps.map((meetUp) => {
+        return {
+          ...meetUp,
+          id: meetUp._id.toString(),
+          // because _id is an ObjectId so we must serialize it
+          _id: meetUp._id.toString(),
+        };
+      }),
+    },
+    revalidate: 60, // Revalidate every 60 seconds (1 minute)
+  };
+}
+
+// export async function getServerSideProps() {
 //   return {
 //     props: {
 //       meetUps: DUMMY_MEETUPS,
 //     },
-//     revalidate: 1,
 //   };
 // }
-
-export async function getServerSideProps() {
-  return {
-    props: {
-      meetUps: DUMMY_MEETUPS,
-    },
-  };
-}
 
 export default HomePage;

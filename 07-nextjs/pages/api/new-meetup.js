@@ -12,6 +12,7 @@ export default async function handler(req, res) {
     const db = client.db();
 
     const meetupsCollection = db.collection("meetups");
+
     // have to synchro this function before close the connection
     const result = await meetupsCollection.insertOne(data);
 
