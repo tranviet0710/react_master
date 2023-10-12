@@ -1,8 +1,17 @@
 import React from "react";
 import MeetupDetail from "@/components/meetups/MeetupDetail";
 import { MongoClient, ObjectId } from "mongodb";
+import Head from "next/head";
 export default function index(props) {
-  return <MeetupDetail meetupData={props.meetupData} />;
+  return (
+    <>
+      <Head>
+        <title>{props.meetupData.title}</title>
+        <meta name="description" content={props.meetupData.description} />
+      </Head>
+      <MeetupDetail meetupData={props.meetupData} />
+    </>
+  );
 }
 // pre-generate the id from url
 export async function getStaticPaths() {
