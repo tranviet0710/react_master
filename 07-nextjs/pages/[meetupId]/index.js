@@ -1,10 +1,25 @@
 import React from "react";
 import MeetupDetail from "@/components/meetups/MeetupDetail";
+import { MongoClient, ObjectId } from "mongodb";
 export default function index(props) {
   return <MeetupDetail meetupData={props.meetupData} />;
 }
 // pre-generate the id from url
 export async function getStaticPaths() {
+  const client = await MongoClient.connect(
+    "mongodb+srv://vietdev:WOXGUE2PMxxDrQDA@cluster0.59ezxwz.mongodb.net/meetups?retryWrites=true&w=majority"
+  );
+
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const meetupsId = await meetupsCollection
+    .find()
+    .map((meetup) => meetup._id.toString())
+    .toArray();
+  client.close();
+
   return {
     /**
      * fallback
@@ -12,32 +27,37 @@ export async function getStaticPaths() {
      * true: define some of params on path, pre-generate the page dynamically => m3 also show
      */
     fallback: false,
-    paths: [
-      {
-        params: {
-          meetupId: "m1",
-        },
+    paths: meetupsId.map((meetupId) => ({
+      params: {
+        meetupId: meetupId,
       },
-      {
-        params: {
-          meetupId: "m2",
-        },
-      },
-    ],
+    })),
   };
 }
 // pre-generate the page
 export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
+
+  const client = await MongoClient.connect(
+    "mongodb+srv://vietdev:WOXGUE2PMxxDrQDA@cluster0.59ezxwz.mongodb.net/meetups?retryWrites=true&w=majority"
+  );
+
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const selectedMeetup = await meetupsCollection.findOne({
+    _id: new ObjectId(meetupId),
+  });
+
+  client.close();
+
   return {
     props: {
       meetupData: {
-        id: meetupId,
-        image:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg",
-        title: "First Meetup",
-        address: "Some Street 5, Some City",
-        description: "This is a first meetup!!!",
+        ...selectedMeetup,
+        id: selectedMeetup._id.toString(),
+        _id: selectedMeetup._id.toString(),
       },
     },
   };
