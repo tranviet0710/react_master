@@ -32,10 +32,12 @@ export async function getStaticPaths() {
   return {
     /**
      * fallback
-     * false: define all params on path, only pre-generate the page that we define in paths => 404
-     * true: define some of params on path, pre-generate the page dynamically => m3 also show
+     * false: define all params on path, only pre-generate the page that we define in paths
+     * => 404
+     * true: define some of params on path, pre-generate the page dynamically
+     * => m3 also show but can be undefine problem
      */
-    fallback: false,
+    fallback: true,
     paths: meetupsId.map((meetupId) => ({
       params: {
         meetupId: meetupId,
