@@ -1,6 +1,6 @@
 const MealsSumamry = () => {
   return (
-    <section className="text-center w-1/2 max-w-2xl m-auto -mt-24 relative bg-[#383838] text-white rounded-2xl p-4 shadow-card-hover">
+    <section className="text-center w-1/2 max-w-2xl m-auto -mt-24 relative bg-[#383838] text-white rounded-2xl p-4 shadow-cart">
       <h2 className="text-3xl mt-0 font-bold">
         Delicious Food, Delivered To You
       </h2>

@@ -3,6 +3,10 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      borderRadius: {
+        "14px": "14px",
+        "20px": "20px",
+      },
       width: {
         "90%": "90%",
       },
@@ -43,7 +47,8 @@ module.exports = {
         },
       },
       boxShadow: {
-        "card-hover": "0 1px 18px 10px rgba(0, 0, 0, 0.25)",
+        cart: "0 1px 18px 10px rgba(0, 0, 0, 0.25)",
+        card: "0 2px 8px rgba(0, 0, 0, 0.25)",
       },
     },
   },

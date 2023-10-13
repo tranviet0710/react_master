@@ -12,7 +12,7 @@ function HomePage(props) {
           content="Browse a huge list of highly active React meetups!"
         />
       </Head>
-      <MeetupList meetups={props.meetUps} />;
+      <MeetupList meetups={props.meetUps} />
     </>
   );
 }
