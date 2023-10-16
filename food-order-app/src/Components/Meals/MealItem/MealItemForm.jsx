@@ -1,6 +1,9 @@
 import Input from "../../UI/Input";
 
 const MealItemForm = (props) => {
+  const onAddItemHandler = (event) => {
+    event.preventDefault();
+  };
   return (
     <form className="text-center">
       <Input
@@ -15,7 +18,10 @@ const MealItemForm = (props) => {
         }}
       />
       <div>
-        <button className="text-white rounded-2xl cursor-pointer bg-[#8a2b06] border-2 border-[#8a2b06] border-solid px-4 py-1 font-bold active:bg-[#641e03] active:border-[#641e03]">
+        <button
+          onClick={onAddItemHandler}
+          className="text-white rounded-2xl cursor-pointer bg-[#8a2b06] border-2 border-[#8a2b06] border-solid px-4 py-1 font-bold active:bg-[#641e03] active:border-[#641e03]"
+        >
           + Add
         </button>
       </div>
