@@ -1,15 +1,26 @@
+import { useContext, useRef } from "react";
 import Input from "../../UI/Input";
+import CartContext from "../../../Store/CartContext";
 
 const MealItemForm = (props) => {
+  const meal = props.meal;
+  const amount = useRef();
+  const { addItem } = useContext(CartContext);
   const onAddItemHandler = (event) => {
     event.preventDefault();
+
+    addItem({
+      ...meal,
+      amount: parseInt(amount.current.value),
+    });
   };
   return (
     <form className="text-center">
       <Input
+        ref={amount}
         label="Amount"
         input={{
-          id: props.id,
+          id: meal.id,
           type: "number",
           min: "1",
           max: "5",

@@ -26,6 +26,24 @@ const DUMMY_MEALS = [
     description: "Healthy...and green...",
     price: 18.99,
   },
+  {
+    id: "m5",
+    name: "Pasta Carbonara",
+    description: "Creamy pasta with bacon and eggs.",
+    price: 12.99,
+  },
+  {
+    id: "m6",
+    name: "Margherita Pizza",
+    description: "Classic pizza with tomato and mozzarella.",
+    price: 10.99,
+  },
+  {
+    id: "m7",
+    name: "Sushi Platter",
+    description: "Assorted sushi rolls and sashimi.",
+    price: 24.99,
+  },
 ];
 const AvailableMeals = () => {
   const mealsList = DUMMY_MEALS.map((meal) => (
