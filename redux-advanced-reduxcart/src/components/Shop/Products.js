@@ -11,9 +11,7 @@ const Products = (props) => {
         {products.map((product, index) =>
           <ProductItem
             key={index}
-            title={product.title}
-            price={product.price}
-            description={product.description}
+            product={product}
           />
         )}
       </ul>
