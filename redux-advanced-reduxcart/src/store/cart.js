@@ -81,7 +81,7 @@ export const sendCartData = (cartData) => {
         showNotification({
           status: "error",
           title: "Error...",
-          message: "Failed to send cart data: " + err.message,
+          message: "Failed to send cart data: " + error.message,
         })
       );
     }
