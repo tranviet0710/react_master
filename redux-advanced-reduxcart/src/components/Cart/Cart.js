@@ -4,25 +4,33 @@ import classes from "./Cart.module.css";
 import CartItem from "./CartItem";
 import { useEffect } from "react";
 import { hideNotification } from "../../store/ui";
-import { sendCartData } from "../../store/cart";
+import { fetchCart, sendCartData } from "../../store/cart";
 let isInitialize = true;
 const Cart = (props) => {
   const dispatch = useDispatch();
   const isVisible = useSelector((state) => state.cart.isVisible);
   const cart = useSelector((state) => state.cart);
+
+  // fetch cart data
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  // update cart data when changes
   useEffect(() => {
     if (isInitialize) {
       isInitialize = false;
       return;
     }
-
-    dispatch(sendCartData(cart));
-
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
     // Hide notification after 3 seconds if it's still visible
     setTimeout(() => {
       dispatch(hideNotification());
     }, 3000);
   }, [cart, dispatch]);
+
   return (
     <Card className={classes.cart}>
       <h2>Your Shopping Cart</h2>

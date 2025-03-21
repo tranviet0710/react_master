@@ -6,6 +6,7 @@ const initialCartState = {
     // { id: 2, title: 'Product 2', quantity: 2, total: 14, price: 7 },
   ],
   isVisible: true,
+  changed: false,
 };
 
 const cartSlice = createSlice({
@@ -18,6 +19,7 @@ const cartSlice = createSlice({
     addToCart(state, action) {
       const newItem = action.payload;
       const existingItem = state.items.find((item) => item.id === newItem.id);
+      state.changed = true;
       if (existingItem) {
         existingItem.quantity += 1;
         existingItem.total += newItem.price;
@@ -30,6 +32,7 @@ const cartSlice = createSlice({
       const existingItem = state.items.find((i) => i.id === item.id);
       existingItem.quantity -= 1;
       existingItem.total -= item.price;
+      state.changed = true;
       if (existingItem.quantity === 0) {
         state.items = state.items.filter((i) => i.id !== item.id);
       }
@@ -39,6 +42,11 @@ const cartSlice = createSlice({
       const existingItem = state.items.find((i) => i.id === item.id);
       existingItem.quantity += 1;
       existingItem.total += item.price;
+      state.changed = true;
+    },
+    replaceCart(state, action) {
+      state.items = action.payload.items;
+      state.isVisible = action.payload.isVisible;
     },
   },
 });
@@ -88,6 +96,53 @@ export const sendCartData = (cartData) => {
   };
 };
 
-export const { toggle, addToCart, reduceItem, increaseItem } =
+export const fetchCart = () => {
+  return async (dispatch) => {
+    dispatch(
+      showNotification({
+        status: "pending",
+        title: "Fetching...",
+        message: "Fetching cart data",
+      })
+    );
+    const sendRequest = async () => {
+      const response = await fetch(
+        "https://redux-cart-64aad-default-rtdb.firebaseio.com/cart.json",
+        {
+          method: "get",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart data");
+      }
+      const data = await response.json();
+      return data;
+    };
+    try {
+      const cartData = await sendRequest();
+      dispatch(replaceCart(cartData));
+      dispatch(
+        showNotification({
+          status: "success",
+          title: "Success...",
+          message: "Fetch cart data successfully",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          status: "error",
+          title: "Error...",
+          message: "Failed to fetch cart data: " + error.message,
+        })
+      );
+    }
+  };
+};
+
+export const { toggle, addToCart, replaceCart, reduceItem, increaseItem } =
   cartSlice.actions;
 export default cartSlice;
