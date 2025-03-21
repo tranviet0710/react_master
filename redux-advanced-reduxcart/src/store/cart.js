@@ -45,7 +45,7 @@ const cartSlice = createSlice({
       state.changed = true;
     },
     replaceCart(state, action) {
-      state.items = action.payload.items;
+      state.items = action.payload.items || [];
       state.isVisible = action.payload.isVisible;
     },
   },
@@ -123,6 +123,7 @@ export const fetchCart = () => {
     };
     try {
       const cartData = await sendRequest();
+      console.log(cartData);
       dispatch(replaceCart(cartData));
       dispatch(
         showNotification({
