@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { showNotification } from "./ui";
 const initialCartState = {
   items: [
     // { id: 1, title: 'Product 1', quantity: 3, total: 18, price: 6 },
@@ -41,6 +42,51 @@ const cartSlice = createSlice({
     },
   },
 });
+
+export const sendCartData = (cartData) => {
+  return async (dispatch) => {
+    dispatch(
+      showNotification({
+        status: "pending",
+        title: "Sending...",
+        message: "Sending cart data",
+      })
+    );
+    const sendRequest = async () => {
+      const response = await fetch(
+        "https://redux-cart-64aad-default-rtdb.firebaseio.com/cart.json",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(cartData),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to send cart data");
+      }
+    };
+    try {
+      await sendRequest();
+      dispatch(
+        showNotification({
+          status: "success",
+          title: "Success...",
+          message: "Send cart data successfully",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          status: "error",
+          title: "Error...",
+          message: "Failed to send cart data: " + err.message,
+        })
+      );
+    }
+  };
+};
 
 export const { toggle, addToCart, reduceItem, increaseItem } =
   cartSlice.actions;
